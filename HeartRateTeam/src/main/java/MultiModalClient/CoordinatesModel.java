@@ -1,4 +1,4 @@
-package ClientHeartRateTeam;
+package MultiModalClient;
 
 public class CoordinatesModel {
 

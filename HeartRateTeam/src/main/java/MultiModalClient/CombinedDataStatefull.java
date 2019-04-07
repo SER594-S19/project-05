@@ -1,6 +1,4 @@
-package ClientHeartRateTeam;
-
-import ClientHeartRateTeam.FileOutputObserver;
+package MultiModalClient;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -8,9 +6,11 @@ import java.util.Observable;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+import MultiModalClient.FileOutputObserver;
+
 public class CombinedDataStatefull extends Observable {
 	private static CombinedDataStatefull instance = null;
-	private ClientHeartRateTeam.FileOutputObserver file;
+	private MultiModalClient.FileOutputObserver file;
 	private GraphObserver graphObserver;
 	
 	String prevData;
@@ -26,7 +26,7 @@ public class CombinedDataStatefull extends Observable {
 	private CombinedDataStatefull() {
 		prevData = "0,0,0,0,0";
 		globalQueue = new ConcurrentLinkedQueue<String>();
-		file = new ClientHeartRateTeam.FileOutputObserver();
+		file = new MultiModalClient.FileOutputObserver();
 		graphObserver = new GraphObserver();
 		this.addObserver(file);
 		this.addObserver(graphObserver);

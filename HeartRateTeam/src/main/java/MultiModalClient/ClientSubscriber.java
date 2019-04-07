@@ -1,4 +1,4 @@
-package ClientHeartRateTeam;
+package MultiModalClient;
 
 import java.io.BufferedReader;
 import java.io.IOException;

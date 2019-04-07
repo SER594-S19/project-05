@@ -1,13 +1,13 @@
 # project-05
 # To run the client for this application:
     - do mvn clean install
-    - run the ClientUI.java file present in src/main/java/ClientHeartRateTeam/ClientUI
+    - run the ClientUI.java file present in src/main/java/MultiModalClient/ClientUI.java
 
 # To connect the two servers:
-    - Run Gui.java file present in src/main/java/HeartRate/Gui.java file
+    - Run Gui.java file present in src/main/java/HeartRateServer2/Gui.java file
     - This will run at port 1700 for HeartRate
 
-     - Run Gui.java file present in src/main/java/facialGestures/Gui.java file
+     - Run Gui.java file present in src/main/java/facialgesturesServer1/Gui.java file
      - This will run at port 1598 for HeartRate
 
 # For the live prediction of data :

@@ -1,4 +1,4 @@
-package ClientHeartRateTeam;
+package MultiModalClient;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;

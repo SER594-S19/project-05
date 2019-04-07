@@ -1,4 +1,4 @@
-package facialgestures;
+package facialgesturesServer1;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
@@ -6,7 +6,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import Core.Publisher;
-import facialgestures.FacialDataGenerator;
+import facialgesturesServer1.FacialDataGenerator;
 
 /**
  * Put together a dataGenerator and a publisher. 

@@ -1,6 +1,4 @@
-package ClientHeartRateTeam;
-
-import ClientHeartRateTeam.ClientSubscriber;
+package MultiModalClient;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -26,6 +24,8 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
+
+import MultiModalClient.ClientSubscriber;
 
 /**
  * This class is used to create a UI element in the client frame

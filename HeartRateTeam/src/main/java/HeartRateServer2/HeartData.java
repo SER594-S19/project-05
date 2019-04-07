@@ -1,4 +1,4 @@
-package HeartRate;
+package HeartRateServer2;
 
 import java.util.List;
 

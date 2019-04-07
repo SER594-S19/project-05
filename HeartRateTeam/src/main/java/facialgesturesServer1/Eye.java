@@ -1,4 +1,4 @@
-package facialgestures;
+package facialgesturesServer1;
 
 import java.awt.Color;
 import java.awt.Graphics;

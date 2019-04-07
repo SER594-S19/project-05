@@ -1,4 +1,4 @@
-package HeartRate;
+package HeartRateServer2;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;

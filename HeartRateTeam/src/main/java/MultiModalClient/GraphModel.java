@@ -1,4 +1,4 @@
-package ClientHeartRateTeam;
+package MultiModalClient;
 
 import java.awt.*;
 import java.util.ArrayList;

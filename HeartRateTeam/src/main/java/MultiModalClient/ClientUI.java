@@ -1,9 +1,10 @@
-package ClientHeartRateTeam;
+package MultiModalClient;
 
-import ClientHeartRateTeam.ClientSubscriber;
-import ClientHeartRateTeam.UIElement;
 import org.deeplearning4j.nn.multilayer.MultiLayerNetwork;
 import org.deeplearning4j.util.ModelSerializer;
+
+import MultiModalClient.ClientSubscriber;
+import MultiModalClient.UIElement;
 
 import javax.swing.*;
 import java.awt.*;

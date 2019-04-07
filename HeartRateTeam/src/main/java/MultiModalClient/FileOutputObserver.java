@@ -1,4 +1,4 @@
-package ClientHeartRateTeam;
+package MultiModalClient;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
