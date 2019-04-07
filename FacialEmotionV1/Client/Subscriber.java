@@ -123,11 +123,11 @@ public class Subscriber extends Observable implements Runnable {
       } else {
         System.out.println("in hello read and =" + stop + " " + measureLocal);
         //checkIfCastExists(dataObject);
-        if(serverPortActive.equals(serverPortSelected)) {
+        //if(serverPortActive.equals(serverPortSelected)) {
             setData(measureLocal);
-        }else {
+        /*}else {
             setData("");
-        }
+        } */
         writeToCSVFile(measureLocal);
         setChanged();
         notifyObservers();
@@ -165,8 +165,11 @@ private void writeToCSVFile(String incomingData) {
 		System.out.println("File exists:"+file.getName());
 	}
 	try { 
-		String cleanData = data.split("\\{")[1];
+		String cleanData = incomingData;
+		cleanData = cleanData.replace('{', ' ');
+		cleanData = cleanData.replace('[', ' ');
 		cleanData = cleanData.replace('}', ' ');
+		cleanData = cleanData.replace(']', ' ');
         // create FileWriter object with file as parameter 
         FileWriter outputfile = new FileWriter(file,true); 
   
@@ -179,6 +182,10 @@ private void writeToCSVFile(String incomingData) {
         String[] rows = new String[dataSplit.length];
         if(iterator == 0) {
         	for(int k=0;k<dataSplit.length;k++) {
+        		if(k == 0) {
+        			headers[k] = "time";
+        			continue;
+        		}
         		headers[k] = dataSplit[k].split("=")[0];
         	}
             writer.writeNext(headers); 
@@ -186,10 +193,9 @@ private void writeToCSVFile(String incomingData) {
         	for(int k=0;k<rows.length;k++) {
         		rows[k] = dataSplit[k].split("=")[1];
         	}
+        	// add data to csv 
+            writer.writeNext(rows); 
         }
-  
-        // add data to csv 
-        writer.writeNext(rows); 
   
         // closing writer connection 
         writer.close(); 

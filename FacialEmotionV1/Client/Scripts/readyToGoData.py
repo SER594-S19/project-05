@@ -5,8 +5,8 @@ import numpy as np
 
 #Outer Join Data from multiple servers. CSV file names are based on the server port number
 def mergeDataFromSources():
-	brain_computer_interface = pd.read_csv("../CSVDumps/1594.csv")
-	skin_conductance = pd.read_csv("../CSVDumps/1593.csv")
+	brain_computer_interface = pd.read_csv("../CSVDumps/1593.csv")
+	skin_conductance = pd.read_csv("../CSVDumps/1594.csv")
 
 	mergedData = pd.merge(left=brain_computer_interface, right=skin_conductance, on="time", how="outer")
 	#print("Merged Successfully!")

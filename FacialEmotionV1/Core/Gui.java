@@ -33,7 +33,7 @@ public class Gui extends JPanel implements  ChangeListener {
   private static Model model;
   static String[] emotions = {"Agreement", "Concentrating", "Disagreement", "Interested", "Thinking", "Unsure"};
   static JLabel[] labels = new JLabel[emotions.length];
-  private final int PORT = 1594;
+  private final int PORT = 1593;
   protected JLabel labelPublishPort;
   private static JButton buttonConnect;
   static JFrame frame = new JFrame("Face Simulator");

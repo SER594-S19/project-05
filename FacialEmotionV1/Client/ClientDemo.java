@@ -75,6 +75,7 @@ public class ClientDemo extends JFrame implements Observer {
     successList = new ArrayList<JButton>();
     connectList = new ArrayList<JButton>();
     stopList = new ArrayList<JButton>();  
+    thisClass = this;
     
     JPanel connectionPanel = new JPanel(new GridLayout(5, 0));
     connectionPanel.setPreferredSize(new Dimension(100,100));
@@ -320,7 +321,7 @@ private ChartPanel createGraphPanel() {
   }
 
   public static void main(String[] args) {
-	  thisClass = new ClientDemo();  
+	  new ClientDemo();
   }
 
 }
