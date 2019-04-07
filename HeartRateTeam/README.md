@@ -5,16 +5,21 @@
     Manish Tandon
     Nikita Bahl
     
-# To run the client for this application:
-    - do mvn clean install
-    - run the ClientUI.java file present in src/main/java/MultiModalClient/ClientUI.java
 
-# To connect the two servers:
-    - Run Gui.java file present in src/main/java/HeartRateServer2/Gui.java file
+# To start the two servers:
+    - Run Gui.java file present at src/main/java/HeartRateServer2/Gui.java file
     - This will run at port 1700 for HeartRate
 
-     - Run Gui.java file present in src/main/java/facialgesturesServer1/Gui.java file
-     - This will run at port 1598 for HeartRate
+     - Run Gui.java file present at src/main/java/facialgesturesServer1/Gui.java file
+     - This will run at port 1598 for Facial Gestures
+    
+# To run the client and connect to servers for this application:
+    - do mvn clean install
+    - run the ClientUI.java file present at src/main/java/MultiModalClient/ClientUI.java
+    - Change ports to 1598 and 1700, to connect to Facial Gestures and HeartRate server respectively.
+    - Change server values exmaple HeartRate server inputs to view changes in client UI emoticons.
+
+
 
 # For the live prediction of data :
     - We have used two servers namely heart rate data and facial data.
