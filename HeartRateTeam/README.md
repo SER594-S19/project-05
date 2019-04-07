@@ -1,4 +1,10 @@
 # project-05
+# Team members
+    Adhiraj Tikku
+    Harshita Kajal
+    Manish Tandon
+    Nikita Bahl
+    
 # To run the client for this application:
     - do mvn clean install
     - run the ClientUI.java file present in src/main/java/MultiModalClient/ClientUI.java
