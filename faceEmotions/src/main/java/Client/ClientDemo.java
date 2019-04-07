@@ -72,10 +72,11 @@ public class ClientDemo extends JFrame implements Observer, ActionListener  {
   private JLabel nnMsg = new JLabel("Training Model....May take a few minutes.");
   private final NeuralNet neuralNetwork = new NeuralNet();
 
+
   int NumberOfInputsReceived = 0;
   
   
-  String filePath = "/Users/sanaydevi/Desktop/hciai/project-03 copy/faceEmotions/res/input.csv";
+  String filePath = "res/input.csv";
   File file = new File(filePath);
   
   FileWriter outputfile;
@@ -530,7 +531,7 @@ public class ClientDemo extends JFrame implements Observer, ActionListener  {
     	  
     	  buttonConnect1.setText("Disconnect");
           panel1.add(t,BorderLayout.PAGE_END);
-
+          buttonEval.setEnabled(false);
     	  service.submit(subscriber[0]);
           subscriber[0].addObserver(this);
     	  
@@ -539,6 +540,7 @@ public class ClientDemo extends JFrame implements Observer, ActionListener  {
       {
           panel1.remove(t);
     	  myFunc();
+          buttonEval.setEnabled(true);
     	  buttonConnect1.setText("Connect");
       }
       
@@ -617,7 +619,8 @@ public class ClientDemo extends JFrame implements Observer, ActionListener  {
          nnMsg.setVisible(true);
          panel1.add(nnMsg,BorderLayout.PAGE_END);
          try {
-           neuralNetwork.train(100,100);
+           neuralNetwork.train(3400,1400);
+
            try {
              File image = new File("res/predictImage0.png");
              BufferedImage img = ImageIO.read(image);
@@ -639,7 +642,7 @@ public class ClientDemo extends JFrame implements Observer, ActionListener  {
                nnMsg.setText("Good Image");
              }
              else if (val == 1.0) {
-               ImageIcon image3 = new ImageIcon("res/Sad.png");
+               ImageIcon image3 = new ImageIcon("res/Sad.jpg");
                JLabel label = new JLabel(image3);
                nnMsg.setText("Good Image");
                panel1.add(label, BorderLayout.SOUTH);
@@ -654,7 +657,7 @@ public class ClientDemo extends JFrame implements Observer, ActionListener  {
          }
          }
          catch (IOException ie){
-           System.out.println(ie);
+             System.out.println(ie);
          }
        });
 
@@ -685,6 +688,7 @@ public class ClientDemo extends JFrame implements Observer, ActionListener  {
 
 	GraphPlot plot = new GraphPlot();
 	plot.setLayout(null);
+	plot.updateUI();
 	JOptionPane.showMessageDialog(null, "Your Graphs have been plotted!", "Hurray!" , JOptionPane.INFORMATION_MESSAGE);
 
 

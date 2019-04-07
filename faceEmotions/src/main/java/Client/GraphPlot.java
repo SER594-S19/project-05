@@ -28,7 +28,7 @@ class GraphPlot extends JPanel{
 public GraphPlot(){
 
         ArrayList<ArrayList<Double>> records = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader("/Users/sanaydevi/Desktop/hciai/project-03 copy/faceEmotions/res/input.csv"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("res/input.csv"))) {
             String line;
             int i=0;
             int j = 0;
@@ -40,7 +40,7 @@ public GraphPlot(){
 
                     paint(g1);
 
-                    File file1 = new File("/Users/sanaydevi/Desktop/hciai/project-03 copy/faceEmotions/res/PredictImage"+j+".png");
+                    File file1 = new File("res/PredictImage"+j+".png");
                     try {
                         ImageIO.write(firstimg, "png", file1);
                     } catch (IOException e) {

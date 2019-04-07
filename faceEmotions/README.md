@@ -3,26 +3,18 @@ STEPS TO RUN:
 1. Clone Entire Project
 2. You should see a pom.xml file, it has all dependencies. Right click on it, then click on Maven and then click on reimport.
 3. Before running, please change paths in these places:
-   a. src/main/java/Client/ClientDemo : Line 74 :  String filePath = "/Users/sanaydevi/Desktop/hciai/project-03 copy/faceEmotions/res/input.csv";
-      rename it to the full path of your local machine/input.csv 
-      
-   b. src/main/java/Client/GraphPlot : Line 31:    try (BufferedReader br = new BufferedReader(new FileReader("/Users/sanaydevi/Desktop/hciai/project-03 copy/faceEmotions/res/input.csv"))) {
-      rename it rename it to the full path of your local machine/input.csv
-      
-   c. src/main/java/Client/GraphPlot :  File file1 = new File("/Users/sanaydevi/Desktop/hciai/project-03 copy/faceEmotions/res/PredictImage"+j+".png");
-      rename it rename it to the full path of your local machine/PredictImage"+j+".png"
-      
-   d. src/main/java/Client/IdxReader : Lines 18,19,21,22
+
+   a. IDX READER:
+   src/main/java/Client/IdxReader : Lines 18,19,21,22
    /Users/sanaydevi/Desktop/hciai/project-03/faceEmotions/src/main/resources/train-images-idx3-ubyte
    should be renamed /local machine path/faceEmotions/src/main/resources/train-images-idx3-ubyte
 
- 4. We took these path change precautions because of Windows/ Mac
- 5. Now run SERVER, click RUN. For good images, increase values of thinking, concentration and agree( above 75%) and
+ 4. Now run SERVER, click RUN. For good images, increase values of thinking, concentration and agree( above 75%) and
  let values of disagree, unsure and frustate be below 10%.
- 6. Now run Client, click Connect
- 7. After few minutes, stop RUN ON SERVER FIRST an then click Disconnect on Client, your png images should be created.
+ 5. Now run Client, click Connect.
+ 6. After few minutes, stop RUN ON SERVER FIRST and then click Disconnect on Client, your png images should be created.
  8. Now click on Predict, it will train the NN with (3050,1400) as parameters and predict the first image
- created by the values given in the Server. You may have to click on client ui gray space to see messages. 
+ created by the values given in the Server. (you may have to click on Grey Space to see message.)
  9. Now if you want to check for other images, change the path in src/main/java/Client/ClientDemo line 616 : File image = new File("res/predictImage1.png"); to
  File image = new File("res/predictImage2.png") and so on. The number of images depend on how long you let the server and client run.
 

@@ -3,6 +3,7 @@ package Client;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.swing.*;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,11 +16,11 @@ public class IdxReader {
     private final static Logger LOGGER = LoggerFactory.getLogger(IdxReader.class);
 
 
-    public static final String INPUT_IMAGE_PATH = "/Users/sanaydevi/Desktop/hciai/project-03/faceEmotions/src/main/resources/train-images-idx3-ubyte";
-    public static final String INPUT_LABEL_PATH = "/Users/sanaydevi/Desktop/hciai/project-03/faceEmotions/src/main/resources/train-labels-idx1-ubyte";
+    public static final String INPUT_IMAGE_PATH = "/Users/sanaydevi/Desktop/project-05-FaceEmotionsAI 3/faceEmotions/src/main/resources/train-images-idx3-ubyte";
+    public static final String INPUT_LABEL_PATH = "/Users/sanaydevi/Desktop/project-05-FaceEmotionsAI 3/faceEmotions/src/main/resources/train-labels-idx1-ubyte";
 
-    public static final String INPUT_IMAGE_PATH_TEST_DATA = "/Users/sanaydevi/Desktop/hciai/project-03/faceEmotions/src/main/resources/test-images-idx3-ubyte";
-    public static final String INPUT_LABEL_PATH_TEST_DATA = "/Users/sanaydevi/Desktop/hciai/project-03/faceEmotions/src/main/resources/test-labels-idx1-ubyte";
+    public static final String INPUT_IMAGE_PATH_TEST_DATA = "/Users/sanaydevi/Desktop/project-05-FaceEmotionsAI 3/faceEmotions/src/main/resources/test-images-idx3-ubyte";
+    public static final String INPUT_LABEL_PATH_TEST_DATA = "/Users/sanaydevi/Desktop/project-05-FaceEmotionsAI 3/faceEmotions/src/main/resources/test-labels-idx1-ubyte";
 
     public static final int VECTOR_DIMENSION = 2500; //square 28*28 as from data set -> array 784 items
 
@@ -48,9 +49,6 @@ public class IdxReader {
         try (FileInputStream inImage = new FileInputStream(inputImagePath);
              FileInputStream inLabel = new FileInputStream(inputLabelPath)) {
 
-            // just skip the amount of a data
-            // see the test and description for dataset
-            //LOGGER.info("In Label = "+inLabel.);
             inImage.skip(16);
             inLabel.skip(8);
             System.out.println(inLabel);
@@ -76,11 +74,11 @@ public class IdxReader {
                 System.out.println("label = "+label);
                 LOGGER.info("Label = "+label);
                 LOGGER.info("Image pixel = "+imgPixels);
-                //it creates a compound object and adds them to a list
                 labeledImageArrayList.add(new LabeledImage(label, imgPixels));
             }
             LOGGER.info("Time to load LabeledImages in seconds: " + ((System.currentTimeMillis() - start) / 1000d));
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Sorry, IDX Reader Cannot Read File", "Error!" , JOptionPane.INFORMATION_MESSAGE);
             LOGGER.error("Smth went wrong: \n" + e);
             throw new RuntimeException(e);
         }
