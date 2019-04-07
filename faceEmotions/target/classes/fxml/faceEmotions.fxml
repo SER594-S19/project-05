@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.effect.*?>
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="324.0" prefWidth="540.0" style="-fx-border-color: black; -fx-border-width: 3px;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Core.Controller">
+   <children>
+      <Label layoutX="279.0" layoutY="196.0" prefHeight="17.0" prefWidth="78.0" text="THINKING" AnchorPane.bottomAnchor="130.0" AnchorPane.leftAnchor="260.0" AnchorPane.rightAnchor="227.0" AnchorPane.topAnchor="193.0">
+         <font>
+            <Font name="Hiragino Kaku Gothic StdN W8" size="13.0" />
+         </font></Label>
+      <Label layoutX="280.0" layoutY="233.0" prefHeight="17.0" prefWidth="66.0" text="UNSURE" AnchorPane.bottomAnchor="90.0" AnchorPane.leftAnchor="260.0" AnchorPane.rightAnchor="238.0" AnchorPane.topAnchor="230.0">
+         <font>
+            <Font name="Hiragino Kaku Gothic StdN W8" size="13.0" />
+         </font></Label>
+      <Ellipse fx:id="face" fill="#ffe0bd" layoutX="127.0" layoutY="141.0" radiusX="101.0" radiusY="108.0" stroke="BLACK" strokeType="INSIDE" AnchorPane.bottomAnchor="98.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="349.0" AnchorPane.topAnchor="30.0" />
+      <JFXToggleButton fx:id="toggle" layoutX="400.0" layoutY="281.0" prefHeight="48.0" prefWidth="140.0" text="RUN" textFill="#086f18" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="420.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="291.0">
+         <font>
+            <Font name="Hiragino Kaku Gothic StdN W8" size="14.0" />
+         </font></JFXToggleButton>
+      <JFXSlider fx:id="agreement" blockIncrement="0.1" layoutX="365.0" layoutY="34.0" majorTickUnit="1.0" max="1.0" minorTickCount="0" onMouseReleased="#sliderAgreementDragged" showTickLabels="true" showTickMarks="true" value="0.01" AnchorPane.bottomAnchor="270.0" AnchorPane.leftAnchor="370.0" AnchorPane.rightAnchor="64.0" AnchorPane.topAnchor="30.0" />
+      <JFXSlider fx:id="disagreement" blockIncrement="0.1" layoutX="362.0" layoutY="74.0" majorTickUnit="1.0" max="1.0" minorTickCount="0" onMouseReleased="#sliderDisagreementDragged" showTickLabels="true" showTickMarks="true" value="0.01" AnchorPane.bottomAnchor="230.0" AnchorPane.leftAnchor="370.0" AnchorPane.rightAnchor="64.0" AnchorPane.topAnchor="70.0" />
+      <JFXSlider fx:id="frustate" blockIncrement="0.1" layoutX="362.0" layoutY="114.0" majorTickUnit="1.0" max="1.0" minorTickCount="0" onMouseReleased="#sliderFrustateDragged" showTickLabels="true" showTickMarks="true" value="0.01" AnchorPane.bottomAnchor="190.0" AnchorPane.leftAnchor="370.0" AnchorPane.rightAnchor="64.0" AnchorPane.topAnchor="110.0" />
+      <JFXSlider fx:id="concentrate" blockIncrement="0.1" layoutX="362.0" layoutY="156.0" majorTickUnit="1.0" max="1.0" minorTickCount="0" onMouseReleased="#sliderConcentrateDragged" showTickLabels="true" showTickMarks="true" value="0.01" AnchorPane.bottomAnchor="150.0" AnchorPane.leftAnchor="370.0" AnchorPane.rightAnchor="64.0" AnchorPane.topAnchor="150.0" />
+      <JFXSlider fx:id="thinking" blockIncrement="0.1" layoutX="382.0" layoutY="194.0" majorTickUnit="1.0" max="1.0" minorTickCount="0" onMouseReleased="#sliderThinkingDragged" showTickLabels="true" showTickMarks="true" value="0.01" AnchorPane.bottomAnchor="110.0" AnchorPane.leftAnchor="370.0" AnchorPane.rightAnchor="64.0" AnchorPane.topAnchor="190.0" />
+      <JFXSlider fx:id="unsure" blockIncrement="0.2" layoutX="382.0" layoutY="234.0" majorTickUnit="1.0" max="1.0" minorTickCount="0" onMouseReleased="#sliderUnsureDragged" showTickLabels="true" showTickMarks="true" value="0.01" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="370.0" AnchorPane.rightAnchor="64.0" AnchorPane.topAnchor="230.0" />
+      <Line endX="485.0" layoutX="115.0" layoutY="281.0" startX="-100.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="290.0" />
+      <AnchorPane layoutX="46.0" layoutY="311.0" prefHeight="50.0" prefWidth="257.0" style="-fx-background-radius: 5px;" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="43.0" AnchorPane.rightAnchor="292.0" AnchorPane.topAnchor="308.0">
+         <children>
+            <Label id="portNumber" fx:id="portNumber" layoutX="169.0" prefHeight="44.0" prefWidth="75.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="169.0" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="0.0">
+               <font>
+                  <Font name="Hiragino Kaku Gothic StdN W8" size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="14.0" layoutY="14.0" text="Publishing At Port:" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="68.41421508789062" AnchorPane.topAnchor="14.0">
+               <font>
+                  <Font name="Hiragino Kaku Gothic StdN W8" size="13.0" />
+               </font></Label>
+         </children>
+      </AnchorPane>
+      <Label layoutX="274.0" layoutY="36.0" prefHeight="21.0" prefWidth="66.0" text="AGREE" AnchorPane.bottomAnchor="290.0" AnchorPane.leftAnchor="271.0" AnchorPane.rightAnchor="240.0" AnchorPane.topAnchor="33.0">
+         <font>
+            <Font name="Hiragino Kaku Gothic StdN W8" size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="259.0" layoutY="74.0" text="DISAGREE" AnchorPane.bottomAnchor="250.0" AnchorPane.leftAnchor="260.0" AnchorPane.rightAnchor="230.0" AnchorPane.topAnchor="70.0">
+         <font>
+            <Font name="Hiragino Kaku Gothic StdN W8" size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="259.0" layoutY="106.0" text="FRUSTATE" AnchorPane.bottomAnchor="210.0" AnchorPane.leftAnchor="260.0" AnchorPane.rightAnchor="225.0" AnchorPane.topAnchor="110.0">
+         <font>
+            <Font name="Hiragino Kaku Gothic StdN W8" size="13.0" />
+         </font></Label>
+      <Label layoutX="259.0" layoutY="149.0" text="CONCENTRATE" AnchorPane.bottomAnchor="170.0" AnchorPane.leftAnchor="240.0" AnchorPane.rightAnchor="211.0" AnchorPane.topAnchor="150.0">
+         <font>
+            <Font name="Hiragino Kaku Gothic StdN W8" size="13.0" />
+         </font></Label>
+      <ProgressIndicator fx:id="disagreementIndicator" layoutX="521.0" layoutY="72.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="38.0" prefWidth="33.0" progress="0.0" AnchorPane.rightAnchor="26.0" AnchorPane.topAnchor="70.0" />
+      <ProgressIndicator fx:id="frustateIndicator" layoutX="521.0" layoutY="122.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="38.0" prefWidth="33.0" progress="0.0" AnchorPane.rightAnchor="26.0" AnchorPane.topAnchor="110.0" />
+      <ProgressIndicator fx:id="concentrateIndicator" layoutX="521.0" layoutY="154.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="38.0" prefWidth="33.0" progress="0.0" AnchorPane.rightAnchor="26.0" AnchorPane.topAnchor="150.0" />
+      <ProgressIndicator fx:id="thinkingIndicator" layoutX="521.0" layoutY="195.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="38.0" prefWidth="33.0" progress="0.0" AnchorPane.rightAnchor="26.0" AnchorPane.topAnchor="190.0" />
+      <ProgressIndicator fx:id="unsureIndicator" layoutX="521.0" layoutY="244.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="38.0" prefWidth="33.0" progress="0.0" AnchorPane.rightAnchor="26.0" AnchorPane.topAnchor="230.0" />
+      <ProgressIndicator fx:id="aggrementIndicator" layoutX="521.0" layoutY="42.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="38.0" prefWidth="33.0" progress="0.0" AnchorPane.rightAnchor="26.0" AnchorPane.topAnchor="30.0" />
+      <Label fx:id="serverRunning" layoutX="306.0" layoutY="325.0" prefHeight="17.0" prefWidth="119.0" text="Server Running..." visible="false" AnchorPane.leftAnchor="430.0" AnchorPane.topAnchor="341.0" />
+      <ImageView fx:id="thumbsUp" blendMode="MULTIPLY" fitHeight="45.0" fitWidth="65.0" layoutX="169.0" layoutY="218.0" pickOnBounds="true" preserveRatio="true" />
+      <Ellipse fx:id="leftEye" fill="WHITE" layoutX="72.0" layoutY="113.0" radiusX="24.0" radiusY="9.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="leftEyeBall" layoutX="72.0" layoutY="113.0" radius="8.0" stroke="BLACK" strokeType="INSIDE" />
+      <Ellipse fx:id="rightEye" fill="WHITE" layoutX="161.0" layoutY="113.0" radiusX="24.0" radiusY="9.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="rightEyeBall" layoutX="161.0" layoutY="113.0" radius="8.0" stroke="BLACK" strokeType="INSIDE" AnchorPane.leftAnchor="153.0" />
+      <Line fx:id="faceupper" endX="100.0" layoutX="70.0" layoutY="195.0" />
+      <QuadCurve fx:id="smile" controlX="50.0" controlY="-43.0" endX="100.0" fill="WHITE" layoutX="70.0" layoutY="217.0" rotate="180.0" stroke="BLACK" strokeType="INSIDE" />
+      <Line fx:id="nose" endX="50.0" layoutX="95.0" layoutY="150.0" rotate="100.0" />
+      <Line endX="10.0" layoutX="115.0" layoutY="176.0" rotate="-12.5" />
+      <ImageView fx:id="thumbsDown" blendMode="MULTIPLY" fitHeight="45.0" fitWidth="65.0" layoutX="16.0" layoutY="234.0" pickOnBounds="true" preserveRatio="true" />
+      <Button fx:id="reset" graphicTextGap="6.0" layoutX="332.0" layoutY="319.0" mnemonicParsing="false" onAction="#Reset" style="-fx-background-color: white; -fx-border-color: black; -fx-border-radius: 4px;" text="Reset" textFill="#086f18">
+         <font>
+            <Font name="Hiragino Kaku Gothic StdN W8" size="13.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
