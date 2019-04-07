@@ -59,9 +59,12 @@ public class ClientUI extends JPanel {
         this.add(graph);
         graph.initializeView();
         ImageIcon ii = new ImageIcon(this.getClass().getClassLoader().getResource("neutral.png"));
+       
         JLabel imageLabel = new JLabel();
+        //imageLabel.setPreferredSize(new Dimension(50, 50));
         imageLabel.setIcon(ii);
         gifPanel.add(imageLabel);
+        //gifPanel.setPreferredSize(new Dimension(15, 15));
         gifPanel.setBackground(Color.WHITE);
         this.add(gifPanel);
 

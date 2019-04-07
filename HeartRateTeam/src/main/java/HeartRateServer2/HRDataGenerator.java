@@ -71,9 +71,9 @@ public class HRDataGenerator extends DataGenerator implements Runnable  {
         int startRange, endRange;
         switch(heartState) {
             case 0: startRange = 60;
-                endRange = 100;
+                endRange = 120;
                 break;
-            case 1: startRange = 100;
+            case 1: startRange = 120;
                 endRange = 140;
                 break;
             case 2: startRange = 140;
