@@ -4,11 +4,14 @@ STEPS TO RUN:
 2. You should see a pom.xml file, it has all dependencies. Right click on it, then click on Maven and then click on reimport.
 3. Before running, please change paths in these places:
    a. src/main/java/Client/ClientDemo : Line 74 :  String filePath = "/Users/sanaydevi/Desktop/hciai/project-03 copy/faceEmotions/res/input.csv";
-      rename it to the full path of your local machine/input.csv
+      rename it to the full path of your local machine/input.csv 
+      
    b. src/main/java/Client/GraphPlot : Line 31:    try (BufferedReader br = new BufferedReader(new FileReader("/Users/sanaydevi/Desktop/hciai/project-03 copy/faceEmotions/res/input.csv"))) {
       rename it rename it to the full path of your local machine/input.csv
+      
    c. src/main/java/Client/GraphPlot :  File file1 = new File("/Users/sanaydevi/Desktop/hciai/project-03 copy/faceEmotions/res/PredictImage"+j+".png");
       rename it rename it to the full path of your local machine/PredictImage"+j+".png"
+      
    d. src/main/java/Client/IdxReader : Lines 18,19,21,22
    /Users/sanaydevi/Desktop/hciai/project-03/faceEmotions/src/main/resources/train-images-idx3-ubyte
    should be renamed /local machine path/faceEmotions/src/main/resources/train-images-idx3-ubyte
@@ -31,7 +34,6 @@ Project-04: POINTS TO CONSIDER
 3. DATA FROM SKIN CONDUCTANCE RAN IN TAB AND INCLUDED IN CSV, HOWEVER DID NOT INCLUDE IT IN ANALYSIS for Neural Nets.
 3. THE X-AXIS WAS TAKEN AS PLEASURE AND Y-AXIS AS AROUSAL, WE TRANSFORMED THE PIXEL COORDINATES TO GRAPH COORDINATES
 USING A FORMULA. THE LINES YOU SEE ARE PLOTTED POINTS ON A GRAPH, WE REMOVED THE X-AXIS AND Y-AXIS SO THAT OUR NEURAL NET COULD TRAIN BETTER.
-![alt text](/res/myBadImage11.png)
 4. IMAGE GENEREATED IS OF PIXEL 50 * 50
 5. WE GENERATED GOOD IMAGES : HIGH AGREE, HIGH CONCENTRATE, HIGH THINKING
 6. WE GENERATED BAD IMAGES : HIGH DISAGREE, HIGH FRUSTATE, HIGH UNSURE
