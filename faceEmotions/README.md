@@ -29,7 +29,7 @@ USING A FORMULA. THE LINES YOU SEE ARE PLOTTED POINTS ON A GRAPH, WE REMOVED THE
 COULD TRAIN BETTER.
 
 
-                              ![alt text](res/myBadImage11.png)
+   ![alt text](res/myBadImage11.png)
 
 
 4. IMAGE GENEREATED IS OF PIXEL 50 * 50
