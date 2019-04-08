@@ -20,6 +20,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.RowFilter;
 
 public class MainClient extends JFrame {
+	
+	static double[] plotArray = null;
 
 	private HeartClient heart;
 	private SkinClient skin;
@@ -34,7 +36,13 @@ public class MainClient extends JFrame {
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
-            g.drawImage(image, 64, 38, this);
+            g.drawImage(image, 4, 8, this);
+            g.setColor (Color.white);
+    		int x = getWidth()/2;
+    		int y = getHeight()/2;
+    		g.translate(x, y);
+    		g.drawLine (-x, 0, x+50, 0);
+    		g.drawLine (0, -y, 0, y);       
         }
     };
 	static HashMap<Integer, Double> faceHeartData = new HashMap<>();
@@ -43,6 +51,7 @@ public class MainClient extends JFrame {
 	static double[] passArray = null;
 	public MainClient() {
 		passArray = new double[9];
+		plotArray = new double[3];
 	}
 
 	private void shutdown() {
@@ -110,6 +119,7 @@ public class MainClient extends JFrame {
 				passArray[6] = (passArray[1] + valuePleasure) / 2;
 			else
 				passArray[6] = valuePleasure;
+			plotArray[0] = passArray[6];
 
 			double valueArousal = (passArray[2] + passArray[3] + passArray[4] + passArray[5]) / 4;
 
@@ -117,6 +127,9 @@ public class MainClient extends JFrame {
 				passArray[7] = (passArray[4] + valueArousal) / 2;
 			else
 				passArray[7] = valueArousal;
+			plotArray[1] = passArray[7];
+			
+			MainClient.plot(plotArray[0], plotArray[1]);
 
 			int SAD = 1;
 			int MODERATE = 2;
@@ -152,13 +165,7 @@ public static JPanel plot(double d, double e) {
 		
 	    Graphics g = image.getGraphics();
 	    g.setColor(Color.red);
-//	    g.
-	    g.drawRect(5, 7, 2, 2);
-	    g.drawRect(5, 8, 1, 1);
-	    g.drawRect(5, 6, 1, 1);
-	    g.drawRect(5, 9, 1, 1);
-	    g.drawRect(5, 10, 1, 1);
-	    g.drawRect(5, 11, 1, 1);
+	    g.drawRect(145 +(int) (d*10), (int) (e*10), 4, 4);
 	    g.dispose();
 	    MainClient.canvas.repaint();
 	    return MainClient.canvas;
@@ -186,7 +193,7 @@ public static JPanel plot(double d, double e) {
 	    innerPanel.setLayout(new GridLayout(2,1));
 	    JPanel plot = new JPanel();
 	    JPanel predict = new JPanel(); 
-	    plot.setBackground(Color.black);
+	    plot.setBackground(Color.white);
 	    outerPanel.setBackground(Color.white);
 	    innerPanel.add(plot(2.5,3.6));
 	    innerPanel.add(predict);
