@@ -24,13 +24,14 @@ class GraphPlot extends JPanel{
 //    }
 //
 //System.out.println(lines.get(0));
-   
-public GraphPlot(){
+
+
+public  GraphPlot(int i){
 
         ArrayList<ArrayList<Double>> records = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader("res/input.csv"))) {
             String line;
-            int i=0;
+           // int i=0;
             int j = 0;
             while ((line = br.readLine()) != null) {
                 if(i == 50){
@@ -40,7 +41,7 @@ public GraphPlot(){
 
                     paint(g1);
 
-                    File file1 = new File("res/PredictImage"+j+".png");
+                    File file1 = new File("res/0/PredictImage"+j+".png");
                     try {
                         ImageIO.write(firstimg, "png", file1);
                     } catch (IOException e) {
@@ -75,16 +76,19 @@ public GraphPlot(){
             	y[i] = origValY;
                 yy[i] = (int)((((origValX + 4) / 6) * 50) - 25 );
             	i++;
-            	
+            	count = count + i;
                
             }
         }catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-                 
 
 
+  }
+
+  public int returnedVal(){
+    return count;
   }
    
    

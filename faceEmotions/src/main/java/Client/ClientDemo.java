@@ -1,9 +1,9 @@
 package Client;
 
-import com.mortennobel.imagescaling.ResampleFilters;
-import com.mortennobel.imagescaling.ResampleOp;
-import org.dmg.pmml.False;
-import org.dmg.pmml.True;
+//import com.mortennobel.imagescaling.ResampleFilters;
+//import com.mortennobel.imagescaling.ResampleOp;
+//import org.dmg.pmml.False;
+//import org.dmg.pmml.True;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -13,11 +13,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
@@ -54,7 +54,7 @@ public class ClientDemo extends JFrame implements Observer, ActionListener  {
   private boolean connect_status3 = false;
   private boolean connect_status4 = false;
   private boolean connect_status5 = false;
-  private double val = 0.0 ;
+  private String val = "0";
 
   private JFrame frame = new JFrame();
   private JButton buttonConnect1 = new JButton("connect");
@@ -63,27 +63,39 @@ public class ClientDemo extends JFrame implements Observer, ActionListener  {
   private JButton buttonConnect4 = new JButton("connect");
   private JButton buttonConnect5 = new JButton("connect");
   private JButton buttonEval = new JButton("Predict");
+  private JButton Next = new JButton("Next");
   private JComponent panel1 = makeTextPanel1("Face");
   private JComponent panel2 = makeTextPanel2("Eyes");
   private JComponent panel3 = makeTextPanel3("Skin");
   private JComponent panel4 = makeTextPanel4("Heart Rate");
   private JComponent panel5 = makeTextPanel5("BCI");
   private JLabel t = new JLabel("Client Running...");
-  private JLabel nnMsg = new JLabel("Training Model....May take a few minutes.");
-  private final NeuralNet neuralNetwork = new NeuralNet();
+  private JLabel nnMsg = new JLabel("Please wait while we Predict on Trained Model....May take a few minutes.");
+  private JLabel Goodlabel = new JLabel();
+  private JLabel ImageToPredict = new JLabel();
+  //private final NeuralNet neuralNetwork = new NeuralNet();
 
+  int num = 3;
+  int numOfImage = 1;
 
   int NumberOfInputsReceived = 0;
   
   
   String filePath = "res/input.csv";
   File file = new File(filePath);
+
   
   FileWriter outputfile;
   
   //  private JComponent panel1 = makeTextPanel("Panel #1");
 //  tabbedPane.add
   public ClientDemo() {
+    if(file.exists()){
+      file.delete();
+    }
+    String filePath = "res/input.csv";
+    file = new File(filePath);
+
 
     service = Executors.newCachedThreadPool();
 
@@ -92,6 +104,8 @@ public class ClientDemo extends JFrame implements Observer, ActionListener  {
 
 
    // panel1.add(panel1Text, BorderLayout.SOUTH);
+    panel1.add(Goodlabel);
+    panel1.add(ImageToPredict);
     panel2.add(panel2Text, BorderLayout.SOUTH);
     panel3.add(panel3Text, BorderLayout.SOUTH);
     panel4.add(panel4Text, BorderLayout.SOUTH);
@@ -154,6 +168,8 @@ public class ClientDemo extends JFrame implements Observer, ActionListener  {
     });
     buttonEval.addActionListener(this);
     buttonConnect1.addActionListener(this);
+    Next.addActionListener(this);
+    Next.setVisible(true);
 
 
     /*buttonConnect1.addActionListener(new ActionListener() {
@@ -456,6 +472,8 @@ public class ClientDemo extends JFrame implements Observer, ActionListener  {
     String data = ((Subscriber) o).getObject().toString();
     //double[] dataOrig= ((Subscriber) o).getObject();
     if (data.compareTo("FIN") != 0) {
+      t.setText("Client running and connected to server "+portNo+"......");
+      t.setVisible(true);
       try {
         if (outputfile == null) {
           outputfile = new FileWriter(file);
@@ -483,7 +501,8 @@ public class ClientDemo extends JFrame implements Observer, ActionListener  {
 
     }
     else {
-
+      t.setText("Sorry we are not recieving any data on port "+portNo);
+      t.setVisible(true);
       buttonConnect1.setEnabled(true);
       buttonConnect2.setEnabled(true);
       buttonConnect3.setEnabled(true);
@@ -515,10 +534,10 @@ public class ClientDemo extends JFrame implements Observer, ActionListener  {
   }
 
   public static void main(String[] args) {
+
     ClientDemo tester = new ClientDemo();
-
-
   }
+
 
   @Override
   public void actionPerformed(ActionEvent e) {
@@ -528,17 +547,20 @@ public class ClientDemo extends JFrame implements Observer, ActionListener  {
     	
       if(connect_status1)
       {
-    	  
-    	  buttonConnect1.setText("Disconnect");
+          t.setVisible(false);
           panel1.add(t,BorderLayout.PAGE_END);
+    	  buttonConnect1.setText("Disconnect");
           buttonEval.setEnabled(false);
     	  service.submit(subscriber[0]);
           subscriber[0].addObserver(this);
+          nnMsg.setVisible(false);
+
     	  
       }
       else
       {
           panel1.remove(t);
+          panel1.remove(nnMsg);
     	  myFunc();
           buttonEval.setEnabled(true);
     	  buttonConnect1.setText("Connect");
@@ -551,7 +573,8 @@ public class ClientDemo extends JFrame implements Observer, ActionListener  {
       
       if(connect_status2)
       {
-    	  
+          t.setVisible(false);
+          panel2.add(t,BorderLayout.PAGE_END);
     	  buttonConnect2.setText("DisConnect");
     	  service.submit(subscriber[1]);
           subscriber[1].addObserver(this);
@@ -570,6 +593,8 @@ public class ClientDemo extends JFrame implements Observer, ActionListener  {
     	
     	if(connect_status3)
     	{
+              t.setVisible(false);
+              panel3.add(t,BorderLayout.PAGE_END);
     		  buttonConnect3.setText("DisConnect");
     	      service.submit(subscriber[2]);
     	      subscriber[2].addObserver(this);
@@ -586,7 +611,8 @@ public class ClientDemo extends JFrame implements Observer, ActionListener  {
     	connect_status4 = !connect_status4;
     	
     	if(connect_status4) {
-    		
+              t.setVisible(false);
+              panel4.add(t,BorderLayout.PAGE_END);
     		  buttonConnect4.setText("DisConnect");
     	      service.submit(subscriber[3]);
     	      subscriber[3].addObserver(this);
@@ -610,58 +636,115 @@ public class ClientDemo extends JFrame implements Observer, ActionListener  {
       } else {
         buttonConnect5.setText("Connect");
       }
-    }
-   	 else if(e.getSource() == buttonEval)
+    } else if(e.getSource() == buttonEval)
      {
         // SwingUtilities.invokeLater(() -> progressBar.showProgressBar("Training may take one or two minutes..."));
 
-       Executors.newCachedThreadPool().submit(() -> {
+         Executors.newCachedThreadPool().submit(() -> {
          nnMsg.setVisible(true);
-         panel1.add(nnMsg,BorderLayout.PAGE_END);
+         panel1.add(Next);
+
          try {
-           neuralNetwork.train(3400,1400);
+//            Path path = Paths.get("Python");
+//           // System.out.print();
+//            Path absolutePathP = path.toAbsolutePath();
+            Path pred = Paths.get("predict.py");
+            Path absolutePred = pred.toAbsolutePath();
+            panel1.add(nnMsg,BorderLayout.PAGE_END);
 
-           try {
-             File image = new File("res/predictImage0.png");
-             BufferedImage img = ImageIO.read(image);
-             BufferedImage bimage = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_INT_RGB);
-             double[] scaledPixels = transformImageToOneDimensionalVector(bimage);
-             LabeledImage labeledImage = new LabeledImage(2, scaledPixels);
-             LabeledImage predict = neuralNetwork.predict(labeledImage);
-             System.out.println(predict.getLabel());
-             val = predict.getLabel();
+           //System.out.println(command);
+            File n = new File("CNN/bin/Python");
+            System.out.println("here");
+           String command = n.getAbsolutePath() + " " + absolutePred;
 
-
-         }
-            finally {
-             if (val== 0.0) {
-               System.out.println("GOOD IMAGE");
-               ImageIcon image2 = new ImageIcon("res/Smile.jpg");
-               JLabel Goodlabel = new JLabel(image2);
-               panel1.add(Goodlabel);
-               nnMsg.setText("Good Image");
-             }
-             else if (val == 1.0) {
-               ImageIcon image3 = new ImageIcon("res/Sad.jpg");
-               JLabel label = new JLabel(image3);
-               nnMsg.setText("Good Image");
-               panel1.add(label, BorderLayout.SOUTH);
-               System.out.println("BAD IMAGE");
-             } else {
-               ImageIcon image4 = new ImageIcon("res/straighFace.png");
-               JLabel label = new JLabel(image4);
-               nnMsg.setText("Good Image");
-               panel1.add(label, BorderLayout.SOUTH);
-               System.out.println("OKAY IMAGE");
-             }
-         }
+           nnMsg.setVisible(true);
+           Process p = Runtime.getRuntime().exec(command);
+           BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
+           String line = "";
+           while ((line = in.readLine()) != null) {
+             // display each output line form python script
+           //  System.out.println(line);
+             System.out.println(line);
+             val = line;
+             System.out.println("val" +val);
+           }
          }
          catch (IOException ie){
-             System.out.println(ie);
+           System.out.print(ie);
          }
-       });
 
-     }
+            finally {
+             ImageIcon imgPre = new ImageIcon(new ImageIcon("res/0/PredictImage0.png").getImage().getScaledInstance(200, 300, Image.SCALE_DEFAULT));
+          // ImageIcon imgPre = new ImageIcon((new ImageIcon("res/0/PredictImage0.png").getS);
+             ImageToPredict.setIcon(imgPre);
+             System.out.println("here" + val.charAt(1));
+             if (val.charAt(1) == '0') {
+               System.out.println("GOOD IMAGE");
+               ImageIcon image2 = new ImageIcon("res/Smile.jpg");
+               Goodlabel.setIcon(image2);
+               nnMsg.setText("Good Image");
+             } else if (val.charAt(1) == '1') {
+               ImageIcon image3 = new ImageIcon("res/Sad.jpg");
+              // JLabel label = new JLabel(image3);
+               nnMsg.setText("Bad Image");
+               Goodlabel.setIcon(image3);
+               System.out.println("BAD IMAGE");
+             } else if (val.charAt(1) == '2') {
+               ImageIcon image4 = new ImageIcon("res/straightFace.png");
+              // JLabel label = new JLabel(image4);
+               nnMsg.setText("Okay Image");
+               Goodlabel.setIcon(image4);
+               System.out.println("OKAY IMAGE");
+             } else {
+               System.out.println("Couldnt predict");
+             }
+         }
+//         catch (IOException ie){
+//             System.out.println(ie);
+//         }
+       });
+     } else if(e.getSource() == Next){
+
+      if(num >= val.length()){
+        nnMsg.setText("No more images left, Congratulations, the Prediction is Over! ");
+        Goodlabel.setIcon(null);
+        ImageToPredict.setIcon(null);
+        Next.setVisible(false);
+        buttonConnect1.setEnabled(true);
+        buttonEval.setEnabled(false);
+        System.out.println("Couldnt predict");
+
+      }
+      else if (val.charAt(num) == '0') {
+        System.out.println("GOOD IMAGE");
+        ImageIcon image2 = new ImageIcon("res/Smile.jpg");
+        Goodlabel.setIcon(image2);
+        ImageIcon imgPre = new ImageIcon(new ImageIcon("res/0/PredictImage"+numOfImage+".png").getImage().getScaledInstance(200, 300, Image.SCALE_DEFAULT));
+        ImageToPredict.setIcon(imgPre);
+       // panel1.add(Goodlabel);
+        nnMsg.setText("Good Image");
+      } else if (val.charAt(num) == '1') {
+        ImageIcon image3 = new ImageIcon("res/Sad.jpg");
+       // JLabel label = new JLabel(image3);
+        Goodlabel.setIcon(image3);
+        nnMsg.setText("Bad Image");
+        ImageIcon imgPre = new ImageIcon(new ImageIcon("res/0/PredictImage"+numOfImage+".png").getImage().getScaledInstance(200, 300, Image.SCALE_DEFAULT));
+        ImageToPredict.setIcon(imgPre);
+       // panel1.add(label, BorderLayout.SOUTH);
+        System.out.println("BAD IMAGE");
+      } else if (val.charAt(num) == '2') {
+        ImageIcon image4 = new ImageIcon("res/straighFace.png");
+        JLabel label = new JLabel(image4);
+        nnMsg.setText("Okay Image");
+        Goodlabel.setIcon(image4);
+        ImageIcon imgPre = new ImageIcon(new ImageIcon("res/0/PredictImage"+numOfImage+".png").getImage().getScaledInstance(200, 300, Image.SCALE_DEFAULT));
+        ImageToPredict.setIcon(imgPre);
+        //panel1.add(label, BorderLayout.SOUTH);
+        System.out.println("OKAY IMAGE");
+      }
+      num = num + 2;
+      numOfImage++;
+    }
 
   }
   private static double[] transformImageToOneDimensionalVector(BufferedImage img) {
@@ -683,13 +766,23 @@ public class ClientDemo extends JFrame implements Observer, ActionListener  {
     }
     return imageGray;
   }
+
+
   
   public void myFunc() {
 
-	GraphPlot plot = new GraphPlot();
+	GraphPlot plot = new GraphPlot(0);
+	int x = plot.returnedVal();
+	System.out.println(x);
+	if(x>49){
+      JOptionPane.showMessageDialog(null, "Your Graphs have been plotted!", "Hurray!" , JOptionPane.INFORMATION_MESSAGE);
+    }
+    else{
+      JOptionPane.showMessageDialog(null, "Sorry, Let it run for more time. We require More Values to plot the graphs. ", "Try Again!" , JOptionPane.INFORMATION_MESSAGE);
+
+    }
 	plot.setLayout(null);
 	plot.updateUI();
-	JOptionPane.showMessageDialog(null, "Your Graphs have been plotted!", "Hurray!" , JOptionPane.INFORMATION_MESSAGE);
 
 
   }

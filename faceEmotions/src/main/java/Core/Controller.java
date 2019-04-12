@@ -35,7 +35,7 @@ public class Controller implements Initializable {
     private static Model model2;
     private static Model model3;
     private static Model model4;
-    private final int PORT = 1596;
+    private final int PORT = 1595;
     Text val;
     String one = "100";
     @FXML

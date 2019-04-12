@@ -1,0 +1,16 @@
+Core/DataGenerator.class
+Client/Subscriber.class
+Client/Convolution.class
+Core/DataGenerator$1.class
+Core/Gui$1.class
+Core/Gui.class
+Client/CSVUtils.class
+Client/GraphPlot.class
+Core/Publisher.class
+Core/Data.class
+Core/Controller.class
+Core/ErrorDialogue1.class
+Core/Controller$1.class
+Core/ErrorDialogue1$1.class
+Core/Model.class
+Core/PublisherAssistant.class
