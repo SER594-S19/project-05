@@ -105,7 +105,6 @@ public class GraphingData extends JPanel {
     	return graphval;
     }
    
-
 	public GraphingData graphcall() {
 		
 		/*JFrame f = new JFrame();
