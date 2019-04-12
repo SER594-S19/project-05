@@ -1,12 +1,15 @@
 --------------------------------------------------------------------------------
 STEPS TO RUN:
 1. Clone Entire Project
-2. in terminal type "mvn clean install"
-3. Now run GUI in /Core/GUI, click RUN. For good images, increase values of thinking, concentration and agree( above 75%) and
+2. Please download CNN.zip file from this link:  https://drive.google.com/open?id=16ZEhKPQ4KGGmxY_iwQLoIo5U3f_2-tcz
+It contains all dependencies for python and the python interpreter. 
+3. When you download the zip, you will get a folder named CNN. Kindly copy paste all the items in that folder to the CNN folder in the project (which is left empty). We did this so that you don't have to deal with Python imports. This is however a crucial part. So please let us know if any problems occur. 
+4. in terminal type "mvn clean install"
+5. Now run GUI in /Core/GUI, click RUN. For good images, increase values of thinking, concentration and agree( above 75%) and
  let values of disagree, unsure and frustate be below 10%.
-4. Now run ClientDemo in /Client/ClientDemo, in the face tab select port number which server is runnng on. Click Connect.
-5. After few minutes, stop RUN ON SERVER FIRST and then click Disconnect on Client, your png images should be created.
-6. Now click on Predict, it will predict the images created when you ran the Server.
+6. Now run ClientDemo in /Client/ClientDemo, in the face tab select port number which server is runnng on. Click Connect.
+7. After few minutes, stop RUN ON SERVER FIRST and then click Disconnect on Client, your png images should be created.
+8. Now click on Predict, it will predict the images created when you ran the Server.
 
 
 _____________________________________________________________________________________________________
