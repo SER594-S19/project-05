@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -36,6 +37,7 @@ public class ClientDemo extends JFrame implements Observer, ActionListener {
   private JButton buttonPort5 = new JButton("Connect for Galvanic Skin Conductivity");
   JTextArea textArea = new JTextArea();
   JTextArea textArea_2 = new JTextArea();
+  JLabel lblNewLabel = new JLabel();
   JPanel dataPanel = new JPanel();
   JPanel facePanel = new JPanel();
   
@@ -103,9 +105,9 @@ public class ClientDemo extends JFrame implements Observer, ActionListener {
     tp.setBounds(25, 16, 760, 900);
     tp.setBackground(Color.WHITE);
     tp.setFont(new Font("Courier",Font.BOLD,20));
+    tp.add("EyeTracking",panelET);  
     tp.add("BCI",panelBCI);  
-    tp.add("FaceRecognition",panelFR);   
-    tp.add("EyeTracking",panelET);   
+    tp.add("FaceRecognition",panelFR);    
     tp.add("HeartRate",panelHR); 
     tp.add("SkinConductance",panelSC);
     getContentPane().add(tp);
@@ -189,10 +191,24 @@ public class ClientDemo extends JFrame implements Observer, ActionListener {
   @Override
   public void update(Observable o, Object arg) {
     String data = ((Subscriber) o).getObject().toString();
+    BufferedImage img = null;
+    try {
+        img = ImageIO.read(new File("image\\happy.jpg"));
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+    
+    Image dimg = img.getScaledInstance(facePanel.getWidth(), facePanel.getHeight(),Image.SCALE_SMOOTH);
+
+    //Image scaledImage = originalImage.getScaledInstance(jPanel.getWidth(),jPanel.getHeight(),Image.SCALE_SMOOTH);
+    lblNewLabel.setIcon(new ImageIcon(dimg));
+    facePanel.add(lblNewLabel);
     
     dataPanel.repaint();
     dataPanel = new GraphingData();
     this.repaint();
+    
+    
    // double[] dataval = ((GraphingData)dataPanel).getXY();
 	//System.out.println("datavalueeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"+dataval[0]);
 	//double dataval[] = gf.graphValue();
