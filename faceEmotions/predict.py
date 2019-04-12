@@ -10,12 +10,12 @@ from PIL import *
 import numpy as np
 
 classifier = Sequential()
-# First Convolution Layer and Pooling Layer
+
 classifier.add(Conv2D(32, (3, 3), input_shape=(50, 50, 3), activation='relu'))
 classifier.add(MaxPooling2D(pool_size=(2, 2)))
 classifier.add(BatchNormalization())
 
-# Second Convolution Layer and Pooling Layer
+
 classifier.add(Conv2D(64, (3, 3), activation='relu'))
 classifier.add(MaxPooling2D(pool_size=(2, 2)))
 classifier.add(BatchNormalization())
@@ -34,11 +34,11 @@ classifier.add(Flatten())
 classifier.add(Dense(units=128, activation='relu'))
 classifier.add(Dense(units=3, activation='softmax'))
 
-# Time to compile the network
+
 classifier.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
-#print("STARTED TESTING")
+
 classifier.load_weights("/Users/sanaydevi/Desktop/final2/FinalAIHCI/project-05/faceEmotions/src/main/resources/weights-Test-CNN.h5")
-# classifier.predict("/Users/sanaydevi/PycharmProjects/CNN/pred_dir/myGoodImage459.png")
+
 test_data_scale = ImageDataGenerator(rescale=1. / 255)
 
 test_generator = test_data_scale.flow_from_directory(
