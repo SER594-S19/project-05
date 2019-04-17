@@ -33,7 +33,8 @@ public class PublisherAssistant implements Runnable {
         if (!updated) continue;
         post(pw);
         updated = false;
-        Thread.sleep(1000);
+        //Setting timeout to 30 per second
+        Thread.sleep(33);
       }
       if (oos != null) oos.close();
       if (pw != null) oos.close();

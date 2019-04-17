@@ -8,14 +8,11 @@ import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.Observable;
 
 import javax.swing.JOptionPane;
 
 import com.opencsv.CSVWriter;
-
-import Core.Gui;
 
 /**
  * ThreadSubscriber. A generic subscriber; get data from a network connection;
@@ -157,51 +154,39 @@ public class Subscriber extends Observable implements Runnable {
   }
 
 private void writeToCSVFile(String incomingData) {
-	if(null == file) {
-		file = new File("Client/CSVDumps/"+port+".csv"); 
-		System.out.println("File Path:"+file.getAbsolutePath());
-	}else {
-		iterator++;
-		System.out.println("File exists:"+file.getName());
-	}
+	file = new File("Client/CSVDumps/"+port+".csv");
+	boolean fileExists = file.exists();
 	try { 
 		String cleanData = incomingData;
 		cleanData = cleanData.replace('{', ' ');
 		cleanData = cleanData.replace('[', ' ');
 		cleanData = cleanData.replace('}', ' ');
 		cleanData = cleanData.replace(']', ' ');
-        // create FileWriter object with file as parameter 
         FileWriter outputfile = new FileWriter(file,true); 
-  
-        // create CSVWriter object filewriter object as parameter 
-        CSVWriter writer = new CSVWriter(outputfile); 
-  
-        // adding header to csv 
+        CSVWriter writer = new CSVWriter(outputfile);   
         String[] dataSplit = cleanData.split(",");
-        String[] headers = new String[dataSplit.length];
         String[] rows = new String[dataSplit.length];
-        if(iterator == 0) {
+        
+        /* If file does not exist append file rows with the column names*/
+        if(!fileExists) {
         	for(int k=0;k<dataSplit.length;k++) {
         		if(k == 0) {
-        			headers[k] = "time";
+        			rows[k] = "time";
         			continue;
         		}
-        		headers[k] = dataSplit[k].split("=")[0];
+        		rows[k] = dataSplit[k].split("=")[0];
         	}
-            writer.writeNext(headers); 
-        }else {
-        	for(int k=0;k<rows.length;k++) {
-        		rows[k] = dataSplit[k].split("=")[1];
-        	}
-        	// add data to csv 
             writer.writeNext(rows); 
         }
+        
+        for(int k=0;k<rows.length;k++) {
+        		rows[k] = dataSplit[k].split("=")[1];
+        }
   
-        // closing writer connection 
+        writer.writeNext(rows); 
         writer.close(); 
     } 
     catch (IOException e) { 
-        // TODO Auto-generated catch block 
         e.printStackTrace(); 
     } 
 }

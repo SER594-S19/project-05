@@ -1,11 +1,12 @@
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 import csv
+import glob
 
 '''graphGenerator.py: Normalizes the merged data into P,A,D values and plots it on a 3D graph
     Author: Sumanth Paranjape '''
 
-#Map of column names to P,A,D
+#Map of column names to Pleasure,Arousal,Dominance
 attributeToPAD = {
     "agreement": "+,+,-",
     "concentrating": "+,-,-",
@@ -17,7 +18,9 @@ attributeToPAD = {
     "engagement": "+,+,-",
     "short_term_engagement": "-,+,+",
     "long_term_engagement": "+,+,-",
-    "heartrate": "+,+,+"
+    "heartrate": "+,+,+",
+    "meditation": "+,-,-",
+    "frustration": "-,-,+"
 }
 
 #Initializing variables
@@ -31,6 +34,10 @@ pleasure = list()
 arousal = list()
 dominance = list()
 
+pngFiles = list()
+pngFiles = glob.glob('../TrainingImages/*.png')
+pngFiles.sort()
+
 #Converts the merged CSV to Pleasure,Arousal,Dominance
 def convertToPADValues():
     print("Attributes To PAD:",attributeToPAD)
@@ -42,7 +49,7 @@ def convertToPADValues():
             print("Column Names:",columnsNames)
         for row in readCSV:
             numCols = len(row)
-            setPADArrays()
+            setPADArrays(numCols)
             for i in range(0,numCols):
                 if(i > 0):
                     addPADValues(row[i],columnsNames[i])
@@ -59,23 +66,26 @@ def addPADValues(value,columnName):
     global P
     global A
     global D
-    padSigns = attributeToPAD[attribute.strip()].split(',')
+    padSigns = attributeToPAD[attribute.strip().lower()].split(',')
     P += float(value) if(padSigns[0] == "+") else (-1) * float(value)
     A += float(value) if(padSigns[1] == "+") else (-1) * float(value)
     D += float(value) if(padSigns[2] == "+") else (-1) * float(value)
 
 #Set P,A,D values into respective arrays
-def setPADArrays():
-    global P
-    global A
-    global D
-    if(P != 0 and A != 0 and D != 0):
-        pleasure.append(P)
-        arousal.append(A)
-        dominance.append(D)
-    P = 0
-    A = 0
-    D = 0
+def setPADArrays(numCols):
+	global P
+	global A
+	global D
+
+	total = numCols-1
+	if(P != 0 and A != 0 and D != 0):
+		pleasure.append(P/total)
+		arousal.append(A/total)
+		dominance.append(D/total)
+
+	P = 0
+	A = 0
+	D = 0
 
 #Plot the P,A,D arrays in a 3D graph and generate image
 def generate3DImage():
@@ -95,7 +105,14 @@ def generate3DImage():
     ax.set_zlabel('Dominance')
 
     #plt.show()
-    plt.savefig('../TrainingImages/sample2.png')
+    global pngFiles
+    
+    if(pngFiles != []):
+        sequenceNumber = int(pngFiles[len(pngFiles)-1].split('_')[1].split('.')[0])
+    else:
+        sequenceNumber = 0
+
+    plt.savefig('../TrainingImages/PAD_'+str(sequenceNumber+1)+'.png')
 
 if __name__== "__main__":
   convertToPADValues()
