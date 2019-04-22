@@ -24,10 +24,6 @@ model.add(Activation('relu'))
 model.add(Dropout(0.5))
 model.add(Dense(1))
 model.add(Activation('sigmoid'))
-
-model.compile(loss='binary_crossentropy',
-              optimizer='rmsprop',
-              metrics=['accuracy'])
 batch_size = 16
 
 # this is the augmentation configuration we will use for training
@@ -42,17 +38,16 @@ train_datagen = ImageDataGenerator(
 test_datagen = ImageDataGenerator(rescale=1./255)
 
 # this is a generator that will read pictures found in
-# subfolers of 'data/train', and indefinitely generate
 # batches of augmented image data
 train_generator = train_datagen.flow_from_directory(
-        'data/train',  # this is the target directory
+        '../TrainingImages',  # this is the target directory
         target_size=(150, 150),  # all images will be resized to 150x150
         batch_size=batch_size,
         class_mode='binary')  # since we use binary_crossentropy loss, we need binary labels
 
 # this is a similar generator, for validation data
 validation_generator = test_datagen.flow_from_directory(
-        'data/validation',
+        '../TestImages',
         target_size=(150, 150),
         batch_size=batch_size,
         class_mode='binary')
@@ -62,4 +57,4 @@ model.fit_generator(
         epochs=50,
         validation_data=validation_generator,
         validation_steps=800 // batch_size)
-model.save_weights('first_try.h5')  # always save your weights after training or during training
+model.save_weights('emotion-predict-model.h5')  # always save your weights after training or during training

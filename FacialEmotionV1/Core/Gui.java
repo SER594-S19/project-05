@@ -210,8 +210,8 @@ public Gui() {
 	    	        buttonConnect.setText("Stop");
     	      } else if (buttonConnect.getText().compareTo("Stop") == 0) {
 	    	        System.out.println("Stop");
-	    	        model.stop();
-	    	        buttonConnect.setText("Run");
+		    	    model.stop();
+		    	    buttonConnect.setText("Run");
     	      }
     	    }
     	  }

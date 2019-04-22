@@ -45,6 +45,7 @@ public class PublisherAssistant implements Runnable {
 
   private void post(PrintWriter oos) throws Exception {
     Object measure = ((DataGenerator) observable).getObject();
+    System.out.println("Posting data:"+measure.toString());
     oos.println(measure);
     oos.flush();
     System.out.println("sending...");

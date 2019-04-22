@@ -34,7 +34,7 @@ public class DataGenerator extends Observable implements Runnable {
       timeStamp = (System.currentTimeMillis() - initialTime) * .001;
       createAndNotify(timeStamp, Math.random());
       try {
-        Thread.sleep(1000);
+        Thread.sleep(33);
       } catch (InterruptedException ex) {
       }
     }

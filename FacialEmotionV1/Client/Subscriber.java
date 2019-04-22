@@ -33,7 +33,6 @@ public class Subscriber extends Observable implements Runnable {
   private String serverPortSelected;
   private int attachedButtonVal;
   private File file;
-  private int iterator;
 
   public int getAttachedButtonVal() {
 	return attachedButtonVal;

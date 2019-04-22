@@ -91,6 +91,8 @@ public class Publisher implements Observer, Runnable {
                   System.out.println("publisher updated");
 
     this.observable = o;
+    DataGenerator dataToGo = (DataGenerator) o;
+    System.out.println("Object to send:"+dataToGo.getObject().toString());
     for (int i = 0; i < threads.size(); i++) {
       System.out.println("assistant try updated");
       threads.get(i).updated();

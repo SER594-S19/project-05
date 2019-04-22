@@ -1,5 +1,7 @@
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
+import numpy as np
+from numpy import array
 import csv
 import glob
 
@@ -12,7 +14,7 @@ attributeToPAD = {
     "concentrating": "+,-,-",
     "disagreement": "-,-,+",
     "interested": "+,+,-",
-    "thinking": "+,-,-",
+    "thinking": "-,+,-",
     "unsure": "-,+,-",
     "frustration": "-,-,+",
     "engagement": "+,+,-",
@@ -89,30 +91,28 @@ def setPADArrays(numCols):
 
 #Plot the P,A,D arrays in a 3D graph and generate image
 def generate3DImage():
-    fig = plt.figure()
-    ax = fig.add_subplot(111, projection='3d')
-
     global pleasure
     global arousal
     global dominance
-    print("P=",pleasure)
-    print("A=",arousal)
-    print("D=",dominance)
-    ax.scatter(pleasure, arousal, dominance, c='r', marker='o')
 
-    ax.set_xlabel('Pleasure')
-    ax.set_ylabel('Arousal')
-    ax.set_zlabel('Dominance')
-
-    #plt.show()
-    global pngFiles
+    start = 0;
+    end = 50;
+    length = len(pleasure)
     
-    if(pngFiles != []):
-        sequenceNumber = int(pngFiles[len(pngFiles)-1].split('_')[1].split('.')[0])
-    else:
-        sequenceNumber = 0
+    while end <= length:
+        print("Start=",start)
+        print("End=",end)
+        fig = plt.figure()
+        ax = fig.add_subplot(111, projection='3d')
+        ax.scatter(pleasure[start:end], arousal[start:end], dominance[start:end])
 
-    plt.savefig('../TrainingImages/PAD_'+str(sequenceNumber+1)+'.png')
+        ax.set_xlabel('Pleasure')
+        ax.set_ylabel('Arousal')
+        ax.set_zlabel('Dominance')
+        #plt.show()
+        plt.savefig('../ImagesToPredict/predict/PAD_'+str(start)+'.png')
+        start += 50
+        end += 50
 
 if __name__== "__main__":
   convertToPADValues()
