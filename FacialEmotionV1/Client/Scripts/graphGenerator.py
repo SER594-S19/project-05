@@ -4,6 +4,8 @@ import numpy as np
 from numpy import array
 import csv
 import glob
+import predictEmotion
+import os
 
 '''graphGenerator.py: Normalizes the merged data into P,A,D values and plots it on a 3D graph
     Author: Sumanth Paranjape '''
@@ -37,13 +39,20 @@ arousal = list()
 dominance = list()
 
 pngFiles = list()
-pngFiles = glob.glob('../TrainingImages/*.png')
+pngFiles = glob.glob('Client/TrainingImages/*.png')
 pngFiles.sort()
 
+startT = ""
+endT = ""
+
 #Converts the merged CSV to Pleasure,Arousal,Dominance
-def convertToPADValues():
+def convertToPADValues(startTime,endTime):
+    global startT
+    global endT
+    startT = startTime
+    endT = endTime
     print("Attributes To PAD:",attributeToPAD)
-    with open('../CSVDumps/merged.csv') as csvfile:
+    with open('Client/CSVDumps/merged.csv') as csvfile:
         readCSV = csv.reader(csvfile, delimiter=',')
         global columnsNames
         if(columnsNames == []):
@@ -55,20 +64,24 @@ def convertToPADValues():
             for i in range(0,numCols):
                 if(i > 0):
                     addPADValues(row[i],columnsNames[i])
+    generate3DImage()
 
 #Does summation of P,A,D values of each row
 def addPADValues(value,columnName):
-    attribute = ""
-    if("_x" in columnName):
+    attribute=''
+    if('_x' in columnName):
         attribute = columnName.replace('_x','')
-    elif("_y" in columnName):
-        attribute = columnName.replace('_y','')
     else:
-        attribute = columnName
+        attribute = columnName.replace('_y','')
+    attribute = attribute.strip()
+    attribute = attribute.replace(' ','_')
+        #elif("_y" in columnName):
+        #else:
+        #attribute = columnName
     global P
     global A
     global D
-    padSigns = attributeToPAD[attribute.strip().lower()].split(',')
+    padSigns = attributeToPAD[attribute.lower()].split(',')
     P += float(value) if(padSigns[0] == "+") else (-1) * float(value)
     A += float(value) if(padSigns[1] == "+") else (-1) * float(value)
     D += float(value) if(padSigns[2] == "+") else (-1) * float(value)
@@ -94,9 +107,14 @@ def generate3DImage():
     global pleasure
     global arousal
     global dominance
+    global start
+    global end
+    
+    remove = 'rm Client/ImagesToPredict/predict/*'
+    os.system(remove)
 
     start = 0;
-    end = 50;
+    end = 10;
     length = len(pleasure)
     
     while end <= length:
@@ -110,11 +128,11 @@ def generate3DImage():
         ax.set_ylabel('Arousal')
         ax.set_zlabel('Dominance')
         #plt.show()
-        plt.savefig('../ImagesToPredict/predict/PAD_'+str(start)+'.png')
+        plt.savefig('Client/ImagesToPredict/predict/PAD_'+str(start)+'.png')
         start += 50
         end += 50
 
-if __name__== "__main__":
-  convertToPADValues()
-  generate3DImage()
+    predictEmotion.makePrediction(startT,endT)
 
+if __name__== "__main__":
+  convertToPADValues(startTime,endTime)

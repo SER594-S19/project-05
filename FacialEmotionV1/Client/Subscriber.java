@@ -170,7 +170,7 @@ private void writeToCSVFile(String incomingData) {
         if(!fileExists) {
         	for(int k=0;k<dataSplit.length;k++) {
         		if(k == 0) {
-        			rows[k] = "time";
+        			rows[k] = "timestamp";
         			continue;
         		}
         		rows[k] = dataSplit[k].split("=")[0];

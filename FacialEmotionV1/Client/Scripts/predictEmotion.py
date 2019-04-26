@@ -8,47 +8,47 @@ import numpy as np
 from keras.layers.normalization import BatchNormalization
 from keras.models import Sequential
 import os
+import time
 
 
-def make_predictions():
-    #print("Hello World")
-    pred_dir = '../ImagesToPredict'
-    final_dir = '../ImagesToPredict/predict'
-    classifier = Sequential()
-    classifier = Sequential()
+def makePrediction(startTime,endTime):
+    predictDir = 'Client/ImagesToPredict'
+    finalDir = 'Client/ImagesToPredict/predict'
+    imageClassifier = Sequential()
+    imageClassifier = Sequential()
     # First Convolution Layer and Pooling Layer
-    classifier.add(Conv2D(32,(3,3), input_shape = (64,64,3), activation = 'relu'))
-    classifier.add(MaxPooling2D(pool_size = (2,2)))
-    classifier.add(BatchNormalization())
+    imageClassifier.add(Conv2D(32,(3,3), input_shape = (64,64,3), activation = 'relu'))
+    imageClassifier.add(MaxPooling2D(pool_size = (2,2)))
+    imageClassifier.add(BatchNormalization())
     
     # Second Convolution Layer and Pooling Layer
-    classifier.add(Conv2D(64,(3,3), activation = 'relu'))
-    classifier.add(MaxPooling2D(pool_size = (2,2)))
-    classifier.add(BatchNormalization())
+    imageClassifier.add(Conv2D(64,(3,3), activation = 'relu'))
+    imageClassifier.add(MaxPooling2D(pool_size = (2,2)))
+    imageClassifier.add(BatchNormalization())
     
-    classifier.add(Conv2D(64,(3,3), activation = 'relu'))
-    classifier.add(MaxPooling2D(pool_size = (2,2)))
-    classifier.add(BatchNormalization())
+    imageClassifier.add(Conv2D(64,(3,3), activation = 'relu'))
+    imageClassifier.add(MaxPooling2D(pool_size = (2,2)))
+    imageClassifier.add(BatchNormalization())
     
-    classifier.add(Conv2D(96,(3,3), activation = 'relu'))
-    classifier.add(MaxPooling2D(pool_size = (2,2)))
-    classifier.add(BatchNormalization())
+    imageClassifier.add(Conv2D(96,(3,3), activation = 'relu'))
+    imageClassifier.add(MaxPooling2D(pool_size = (2,2)))
+    imageClassifier.add(BatchNormalization())
     
     # Flattening Layer
-    classifier.add(Flatten())
+    imageClassifier.add(Flatten())
     
-    classifier.add(Dense(units = 128, activation = 'relu'))
-    classifier.add(Dense(units = 3, activation = 'softmax'))
+    imageClassifier.add(Dense(units = 128, activation = 'relu'))
+    imageClassifier.add(Dense(units = 3, activation = 'softmax'))
     
-    # Time to compile the network
-    classifier.compile(optimizer = 'adam', loss = 'binary_crossentropy', metrics = ['accuracy'])
+    # Setting loss and optimizer and compile time
+    imageClassifier.compile(optimizer = 'adam', loss = 'binary_crossentropy', metrics = ['accuracy'])
     
-    classifier.load_weights("../Model/emotion-predict-model.h5")
+    imageClassifier.load_weights("Client/Model/emotion-predict-model.h5")
     
     test_data_scale = ImageDataGenerator(rescale = 1./255)
     
     test_generator = test_data_scale.flow_from_directory(
-        directory=pred_dir,
+        directory=predictDir,
         target_size=(64, 64),
         color_mode="rgb",
         batch_size=32,
@@ -56,32 +56,52 @@ def make_predictions():
         shuffle=False
     ) 
     
-    a = [f for f in os.listdir(final_dir) if os.path.isfile(os.path.join(final_dir, f))]
-    #print(len(a))
-    total_images = len(a)-1
+    a = [f for f in os.listdir(finalDir) if os.path.isfile(os.path.join(finalDir, f))]
+    total = len(a)-1
 
     test_generator.reset()
     
-    pred=classifier.predict_generator(test_generator,verbose=1,steps=total_images/32)
+    pred=imageClassifier.predict_generator(test_generator,verbose=1,steps=total/32)
     print(pred)
     
-    predicted_class_indices=np.argmax(pred,axis = 1)
-    print("Predicted_class_indices:",predicted_class_indices)
+    predictedClasses=np.argmax(pred,axis = 1)
     
     train_data_scale = ImageDataGenerator(rescale = 1./255, shear_range = 0.2, zoom_range = 0.2, horizontal_flip = True)
     
-    #/Users/student/Desktop/MyStuff/SER594/Project/project-05/project-05/project4/hci_plots/train_set
-    train_set = train_data_scale.flow_from_directory('../TrainingImages',target_size = (64,64), batch_size = 32, class_mode = 'categorical')
+    train_set = train_data_scale.flow_from_directory('Client/TrainingImages',target_size = (64,64), batch_size = 32, class_mode = 'categorical')
     
     labels = (train_set.class_indices)
     print("Labels:",labels)
     labels = dict((v,k) for k,v in labels.items())
-    predictions = [labels[k] for k in predicted_class_indices]
+    predictions = [labels[k] for k in predictedClasses]
     
     j=0
+    try:
+        os.remove("results.txt")
+        os.remove("Client/CSVDumps/merged.csv")
+    except:
+        print("Results file doesnt exist")
+
+    file = open('results.txt','w')
+    file.write(findDuration(startTime,endTime)+'\n')
+
     for i in predictions:
-        print("Prediction for image number "+str(j)+" is: "+str(i))
+        file.write(str(i+"\n"))
+        print("Prediction for "+str(j)+" is: "+str(i))
         j+=1
 
+    file.close()
+
+def findDuration(startTime,endTime):
+    time_tuple = time.strptime(str(startTime), '%d-%m-%Y %H:%M:%S:%f')
+    startEpoch = time.mktime(time_tuple)
+
+    time_tuple = time.strptime(str(endTime), '%d-%m-%Y %H:%M:%S:%f')
+    endEpoch = time.mktime(time_tuple)
+
+    duration = abs(endEpoch-startEpoch)/60
+    return str(duration)
+
+
 if __name__ == "__main__":
-    make_predictions()
+    makePrediction(startTime,endTime)

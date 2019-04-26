@@ -7,9 +7,11 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -26,7 +28,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.Timer;
 
@@ -36,6 +37,7 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
@@ -70,20 +72,114 @@ public class ClientDemo extends JFrame implements Observer {
 	  //Your tabbed panels go here.
 	  JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 
-	  tabbedPane.addTab("Tab1", mainPanel());
-	  tabbedPane.addTab("Tab2", makePanel("Making Tab2"));
+	  tabbedPane.addTab("Mutimodal Client", mainPanel());
+	  tabbedPane.addTab("Results", makePanel("Making Tab2"));
 
 	  add(tabbedPane);
   }
   
   private static JPanel makePanel(String text) {
-      JPanel p = new JPanel();
-      p.add(new Label(text));
-      p.setLayout(new GridLayout(1, 1));
-      return p;
+      JPanel resultsButtonPanel = new JPanel(new GridLayout(6,2));
+      JPanel resultsPanel = new JPanel(new GridLayout(1,0));
+      resultsPanel.setPreferredSize(new Dimension(100,100));
+
+      JLabel loadLabel = new JLabel("Loading Results...");
+      
+      //resultsTabPanel.setPreferredSize(new Dimension(10,10));
+      JButton showResults = new JButton("Generate Results");
+      showResults.setPreferredSize(new Dimension(20,20));
+      if(connectList.size() == 5) 
+    	  showResults.setEnabled(true);
+      else 
+    	  showResults.setEnabled(false);
+      
+      showResults.addActionListener(new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			//Display Results graph
+		    resultsPanel.add(loadLabel);
+			loadLabel.setText("Loading Results...");
+		    int result = AnalyzeData.runMachineLearningScript();
+		    if(result == 0) {
+			    resultsPanel.remove(loadLabel);
+		    	showPredictionGraph(resultsPanel);
+		    }else {
+		    	loadLabel.setText("Error occured during analysis, please try later!");
+		    }
+			//JOptionPane.showMessageDialog(null, "Button clicked!");
+		}
+    	  
+      });
+      resultsButtonPanel.add(showResults);
+      resultsButtonPanel.add(resultsPanel);
+      return resultsButtonPanel;
   }
   
-  private JPanel mainPanel() {
+  private static void showPredictionGraph(JPanel resultsPanel) {
+	  DefaultCategoryDataset dataset = new DefaultCategoryDataset();  
+	  	
+	  	int[] data = getData();
+	    // Population in 2005 
+	  	System.out.println("Print Happy:"+data[0]);
+	  	System.out.println("Print Happy:"+data[1]);
+	  	System.out.println("Print Happy:"+data[2]);
+
+	    dataset.addValue(data[0], "Happy", "Happy");  
+	    dataset.addValue(data[1], "Neutral", "Neutral");  
+	    dataset.addValue(data[2], "Sad", "Sad");  
+	  
+	    
+	  JFreeChart chart=ChartFactory.createBarChart(  
+		        "Emotion Prediction", //Chart Title  
+		        "Emotion", // Category axis  
+		        "Probability", // Value axis  
+		        dataset,  
+		        PlotOrientation.HORIZONTAL,  
+		        true,true,false  
+		       );  
+	  
+	  resultsPanel.add(new ChartPanel(chart) {
+			private static final long serialVersionUID = 4960544148862965383L;
+			@Override
+	         public Dimension getPreferredSize() {
+	             return new Dimension(1000, 1000);
+	         }
+	     },BorderLayout.CENTER);
+  }
+  
+  private static int[] getData() {
+	  BufferedReader reader;
+	  int[] data = new int[4];
+	  int total = 0;
+		try {
+			reader = new BufferedReader(new FileReader(
+					"Client/Scripts/results.txt"));
+			String line = reader.readLine();
+			while (line != null) {
+				if(line.equals("Happy"))
+					data[0] += 1;
+				else if(line.equals("Neutral"))
+					data[1] += 1;
+				else if(line.equals("Sad"))
+					data[2] += 1;
+				else {
+					line = reader.readLine();
+					continue;
+				}
+				
+				total++;
+				System.out.println(line);
+				line = reader.readLine();
+			}
+			data[3] = total;
+			reader.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}	
+		return data;
+}
+
+private JPanel mainPanel() {
 
 	  	JPanel mainTabPanel = new JPanel();
 	  	mainTabPanel.setLayout(new GridLayout(2,0));
@@ -265,7 +361,7 @@ private boolean isInvalidPortNumber(String text) {
 }
 
 private ChartPanel createGraphPanel() {
-      XYSeries series = new XYSeries("Data");
+     XYSeries series = new XYSeries("Data");
      XYSeriesCollection dataset = new XYSeriesCollection(series);
      new Timer(1000, new ActionListener() {
 
