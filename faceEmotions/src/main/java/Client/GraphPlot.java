@@ -50,7 +50,7 @@ public  GraphPlot(int i){
                     i = 0;
                     j = j + 1;
                     System.out.println(j);
-                    break;
+                   
                 }
                 String[] values = line.split(",");
                 double origValX = 0;
