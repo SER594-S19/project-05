@@ -53,6 +53,7 @@ public  GraphPlot(int i){
                    
                 }
                 String[] values = line.split(",");
+		if(values.length == 7){    
                 double origValX = 0;
                 double origValY = 0;
             	
@@ -77,6 +78,7 @@ public  GraphPlot(int i){
                 yy[i] = (int)((((origValX + 4) / 6) * 50) - 25 );
             	i++;
             	count = count + i;
+		}	
                
             }
         }catch (IOException e) {
