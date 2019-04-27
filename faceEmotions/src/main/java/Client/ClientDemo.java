@@ -733,7 +733,7 @@ public class ClientDemo extends JFrame implements Observer, ActionListener  {
        // panel1.add(label, BorderLayout.SOUTH);
         System.out.println("BAD IMAGE");
       } else if (val.charAt(num) == '2') {
-        ImageIcon image4 = new ImageIcon("res/straighFace.png");
+        ImageIcon image4 = new ImageIcon("res/straightFace.png");
         JLabel label = new JLabel(image4);
         nnMsg.setText("Okay Image");
         Goodlabel.setIcon(image4);
